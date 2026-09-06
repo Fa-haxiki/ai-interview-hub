@@ -1,0 +1,21 @@
+---
+description: 题目与文档中的代码示例优先使用 JavaScript / TypeScript，术语用中文社区习惯
+alwaysApply: true
+---
+
+# 代码示例用 JS
+
+写或改 `content/**/*.md`、README、以及任何讲解代码时：
+
+- 示例默认 **JavaScript / TypeScript**，包名用 Node.js / NestJS 能装的：`langchain`、`@langchain/core`、`@langchain/langgraph`、`@langchain/openai`、`zod`、`neo4j-driver`、`@elastic/elasticsearch` 等。
+- 不要用 Python 代码块，也不要写 `pip`、Pydantic、`TypedDict`、`ainvoke`、`create_agent` 这类 Python API。
+- LangChain / LangGraph 用 JS 驼峰：`createAgent`、`withStructuredOutput`、`.pipe()`、`bindTools`、`MemorySaver`、`compile({ checkpointer })`。
+- Schema 用 **Zod**，不要用 Pydantic。
+- 部署/HTTP 中间件对照 **NestJS / Express**，不要用 FastAPI。
+- Cypher、公式、架构图仍可用 `text` / `cypher` 围栏。
+
+# 术语用中文社区习惯
+
+- 优先使用国内中文社区通行的术语，不要从英文文章直译。
+- 不确定时去查国内中文站点（掘金、知乎、中文 MDN、`zh-hans.react.dev` 等）已有的叫法，而不是自己翻。
+- 来源链接优先用中文版：React 用 `zh-hans.react.dev`，MDN 用 `developer.mozilla.org/zh-CN/`，web.dev 有中文版优先中文。

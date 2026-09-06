@@ -11,10 +11,10 @@ sources:
     url: "https://blog.langchain.dev/how-to-think-about-agent-frameworks/"
     lang: en
   - title: "LangGraph overview"
-    url: "https://docs.langchain.com/oss/python/langgraph/overview"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/overview"
     lang: en
   - title: "LangChain overview"
-    url: "https://docs.langchain.com/oss/python/langchain/overview"
+    url: "https://docs.langchain.com/oss/javascript/langchain/overview"
     lang: en
   - title: "2026年RAG大厂面试题汇总 - 卡码笔记"
     url: "https://notes.kamacoder.com/interview/llm/rag_interview.html"
@@ -41,7 +41,7 @@ Harrison Chase 也强调：做好 Agent 的难点是**每一步喂给模型的�
 
 ## 我怎么选
 
-线性、稳定、要极致可控的核心链路（检索、权限过滤、计费），我倾向自研几十到几百行薄封装，接口可替换。出现循环、分支、断点续跑、人机审批，我用 LangGraph，但节点函数尽量是普通 Python，不把业务规则再包一层魔法。完全自研图运行时，只有在控制流本身是竞争力、且团队愿意维护检查点和恢复语义时才值得。
+线性、稳定、要极致可控的核心链路（检索、权限过滤、计费），我倾向自研几十到几百行薄封装，接口可替换。出现循环、分支、断点续跑、人机审批，我用 LangGraph，但节点函数尽量是普通 TypeScript，不把业务规则再包一层魔法。完全自研图运行时，只有在控制流本身是竞争力、且团队愿意维护检查点和恢复语义时才值得。
 
 还有一个组织层面的信号：如果团队没人能讲清某条 Chain 实际发出去的 Prompt，框架就已经过重了。这时减脂比继续叠中间件更重要。模型变强不会自动消灭工作流，很多线上系统永远是「一段确定流程 + 局部 Agent」，框架要能同时表达这两端，而不是逼你选一个极端。
 

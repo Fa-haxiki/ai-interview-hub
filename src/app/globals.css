@@ -316,3 +316,17 @@
     font-size: 0.95rem;
   }
 }
+
+/* 助手抽屉：覆盖 Sheet 自带的 sm:max-w-sm（约 384px） */
+.assistant-drawer[data-slot="sheet-content"][data-side="right"] {
+  width: 100%;
+  max-width: none;
+}
+
+@media (min-width: 640px) {
+  .assistant-drawer[data-slot="sheet-content"][data-side="right"] {
+    width: 50vw;
+    min-width: 50vw;
+    max-width: none;
+  }
+}

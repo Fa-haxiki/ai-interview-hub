@@ -7,8 +7,8 @@ difficulty: hard
 order: 2
 tags: [知识图谱构建, NER, 关系抽取, 实体对齐, Schema]
 sources:
-  - title: "User Guide: Knowledge Graph Builder - Neo4j GraphRAG Python"
-    url: "https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_kg_builder.html"
+  - title: "Neo4j JavaScript Driver Manual"
+    url: "https://neo4j.com/docs/javascript-manual/current/"
     lang: en
   - title: "Welcome - Microsoft GraphRAG"
     url: "https://microsoft.github.io/graphrag/"
@@ -26,7 +26,7 @@ createdAt: "2026-09-06"
 
 ## 一条典型流水线
 
-Neo4j GraphRAG Python 的 KG Builder 把步骤拆开了，面试按这个说就够清楚：
+Neo4j 官方把建图拆成可单独替换的步骤，Node 里用 `neo4j-driver` 写回；面试按这条流水线说就够清楚：
 
 ```text
 文档加载 → 切块 →（可选）算 embedding

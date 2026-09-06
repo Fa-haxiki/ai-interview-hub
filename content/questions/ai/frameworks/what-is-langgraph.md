@@ -8,7 +8,7 @@ order: 1
 tags: [LangGraph, DAG, 控制流, Agent]
 sources:
   - title: "LangGraph overview"
-    url: "https://docs.langchain.com/oss/python/langgraph/overview"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/overview"
     lang: en
   - title: "LangGraph - The LangChain Blog"
     url: "https://blog.langchain.dev/langgraph/"

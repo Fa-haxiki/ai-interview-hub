@@ -20,7 +20,7 @@ createdAt: "2026-09-06"
 
 ## 代码
 
-- **按语法单元切**：用 tree-sitter 之类的解析器得到 AST，在函数、类、方法边界上切，而不是按行数。LangChain 的 `RecursiveCharacterTextSplitter.from_language` 就是这个思路的简化版。
+- **按语法单元切**：用 tree-sitter 之类的解析器得到 AST，在函数、类、方法边界上切，而不是按行数。LangChain 的 `RecursiveCharacterTextSplitter.fromLanguage`（`@langchain/textsplitters`）就是这个思路的简化版。
 - **块里必须带签名和上下文**：只有函数体、没有函数名和参数的块几乎无法被检索到；我会把函数签名、docstring、所属类名、文件路径和关键 import 一起放进块（或放进前置上下文）。
 - **保留完整代码块**：宁可块大一点，也不要把一个函数切成两半。
 - **检索侧配合**：代码里大量标识符（类名、错误码、配置项）是精确匹配问题，混合检索里 BM25 的权重要比普通文本高；有条件时用代码专用的 embedding 模型。

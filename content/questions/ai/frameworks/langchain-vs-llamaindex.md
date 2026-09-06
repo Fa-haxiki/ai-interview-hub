@@ -11,10 +11,10 @@ sources:
     url: "https://docs.llamaindex.ai/en/stable/"
     lang: en
   - title: "LangChain overview"
-    url: "https://docs.langchain.com/oss/python/langchain/overview"
+    url: "https://docs.langchain.com/oss/javascript/langchain/overview"
     lang: en
   - title: "LangGraph overview"
-    url: "https://docs.langchain.com/oss/python/langgraph/overview"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/overview"
     lang: en
   - title: "2026年RAG大厂面试题汇总 - 卡码笔记"
     url: "https://notes.kamacoder.com/interview/llm/rag_interview.html"

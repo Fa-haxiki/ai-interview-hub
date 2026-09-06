@@ -8,10 +8,10 @@ order: 1
 tags: [LangChain, Runnable, LCEL, 编排]
 sources:
   - title: "LangChain overview"
-    url: "https://docs.langchain.com/oss/python/langchain/overview"
+    url: "https://docs.langchain.com/oss/javascript/langchain/overview"
     lang: en
   - title: "Models - LangChain docs"
-    url: "https://docs.langchain.com/oss/python/langchain/models"
+    url: "https://docs.langchain.com/oss/javascript/langchain/models"
     lang: en
   - title: "2026年RAG大厂面试题汇总 - 卡码笔记"
     url: "https://notes.kamacoder.com/interview/llm/rag_interview.html"
@@ -29,14 +29,14 @@ LangChain 是 LLM 应用的**编排层**，不是模型本身。它解决的是�
 
 我面试时会按「输入 → 模型 → 输出 → 副作用」来讲：
 
-- **Runnable / LCEL**：一切皆 Runnable，用 `|` 组合成链，统一 `invoke` / `stream` / `batch` / `ainvoke`。
+- **Runnable / LCEL**：一切皆 Runnable，用 `.pipe()` 组合成链，统一 `invoke` / `stream` / `batch`（JS 里都是 Promise）。
 - **Prompt**：把变量填进模板，和具体模型解耦。
 - **Tool**：给模型可调用的外部能力（name + description + schema + 执行函数）。
 - **Retriever**：按 query 取文档片段，是 RAG 的入口。
 - **OutputParser**：把自由文本或结构化输出转成程序能用的类型。
 - **Memory**：跨轮对话的状态。现代做法更常把 `messages` 显式放进 State，而不是依赖隐式 Memory 对象。
 
-一条最小 RAG 就是 `retriever` 取出片段，再经 `prompt | model | parser` 生成答案。Agent 场景则再加 Tool，让模型在循环里决定要不要检索、要不要调外部 API。官方现在也把 Agent 收成 `create_agent` 这种薄 harness：模型、工具、系统提示、中间件按需组合，底层仍建在 LangGraph 上。
+一条最小 RAG 就是 `retriever` 取出片段，再经 `prompt.pipe(model).pipe(parser)` 生成答案。Agent 场景则再加 Tool，让模型在循环里决定要不要检索、要不要调外部 API。官方现在也把 Agent 收成 `createAgent` 这种薄 harness：模型、工具、系统提示、中间件按需组合，底层仍建在 LangGraph 上。
 
 我会主动强调两件容易被问到的事：第一，LangChain 的模型接口是供应商无关的，换 OpenAI / Anthropic / 本地模型通常只改初始化，不改整条链；第二，它解决的是工程编排，不解决幻觉、检索质量或评测——那些要另做。
 

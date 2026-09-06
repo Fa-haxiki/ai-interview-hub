@@ -3,29 +3,33 @@
 import { Loader2Icon, SparklesIcon } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { DifficultyBadge } from "@/components/difficulty-badge";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   ASSISTANT_MODELS,
   DEFAULT_ASSISTANT_MODEL,
 } from "@/lib/ai-models";
 import type { FollowUp } from "@/lib/questions/types";
 import { SEARCH_INDEX_PATH, type SearchDoc } from "@/lib/search/types";
+import { cn } from "@/lib/utils";
 
 const MODEL_STORAGE_KEY = "assistant-model";
 
 type RelatedHit = Pick<SearchDoc, "url" | "title" | "section" | "difficulty">;
+type DrawerTab = "answer" | "notes";
 
 type AskState =
   | { status: "idle" }
-  | { status: "loading" }
+  | { status: "loading"; related: RelatedHit[] }
   | { status: "ready"; answer: string; related: RelatedHit[]; model?: string }
   | { status: "error"; message: string; related: RelatedHit[] };
 
@@ -101,6 +105,11 @@ async function askWorker(payload: {
   return { answer: data.answer.trim(), model: data.model };
 }
 
+function relatedCount(ask: AskState): number {
+  if (ask.status === "idle") return 0;
+  return ask.related.length;
+}
+
 export function FollowUpAssistant({
   followUps,
   pageTitle,
@@ -113,6 +122,7 @@ export function FollowUpAssistant({
   const [active, setActive] = useState<FollowUp | null>(null);
   const [ask, setAsk] = useState<AskState>({ status: "idle" });
   const [modelId, setModelId] = useState(DEFAULT_ASSISTANT_MODEL);
+  const [tab, setTab] = useState<DrawerTab>("answer");
 
   useEffect(() => {
     void loadSearchIndex().catch(() => undefined);
@@ -124,10 +134,12 @@ export function FollowUpAssistant({
 
   const runAsk = useCallback(
     async (item: FollowUp) => {
-      setAsk({ status: "loading" });
+      setTab("answer");
+      setAsk({ status: "loading", related: [] });
       try {
         await loadSearchIndex();
         const related = searchRelated(item.question, pageUrl);
+        setAsk({ status: "loading", related });
         try {
           const { answer, model } = await askWorker({
             question: item.question,
@@ -143,7 +155,7 @@ export function FollowUpAssistant({
             status: "error",
             message:
               message.includes("404") || message.includes("暂不可用")
-                ? "当前预览环境没有接上 Cloudflare Workers AI。部署后即可生成回答；下面是站内已有的相关笔记。"
+                ? "当前预览环境没有接上 Cloudflare Workers AI。部署后即可生成回答。"
                 : message,
             related,
           });
@@ -165,6 +177,8 @@ export function FollowUpAssistant({
   };
 
   if (followUps.length === 0) return null;
+
+  const notes = relatedCount(ask);
 
   return (
     <section aria-labelledby="followups-heading" className="mt-10">
@@ -197,27 +211,28 @@ export function FollowUpAssistant({
         ))}
       </ul>
 
-      <Dialog
+      <Sheet
         open={active !== null}
         onOpenChange={(next) => {
           if (!next) {
             setActive(null);
             setAsk({ status: "idle" });
+            setTab("answer");
           }
         }}
       >
-        <DialogContent
-          showCloseButton
-          className="max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:w-screen max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none! max-sm:ring-0 sm:max-w-xl sm:max-h-[85vh] grid-rows-[auto_minmax(0,1fr)] overflow-hidden"
+        <SheetContent
+          side="right"
+          className="assistant-drawer gap-0 p-0"
         >
-          <DialogHeader>
-            <DialogTitle className="pr-8 text-base leading-snug">
+          <SheetHeader className="border-b pr-12">
+            <SheetTitle className="text-base leading-snug">
               {active?.question}
-            </DialogTitle>
-            <DialogDescription>
+            </SheetTitle>
+            <SheetDescription>
               围绕「{pageTitle}」检索本站并生成回答，内容仅供练习参考。
-            </DialogDescription>
-            <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+            </SheetDescription>
+            <label className="mt-2 flex flex-col gap-1 text-xs text-muted-foreground">
               模型
               <select
                 className="h-9 rounded-md border bg-background px-2 text-sm text-foreground"
@@ -236,58 +251,118 @@ export function FollowUpAssistant({
                 ))}
               </select>
             </label>
-          </DialogHeader>
+          </SheetHeader>
 
-          <div className="min-h-0 overflow-y-auto pb-1">
-            {ask.status === "loading" && (
-              <div className="flex items-center gap-2 py-8 text-sm text-muted-foreground">
-                <Loader2Icon className="size-4 animate-spin" />
-                正在检索笔记并生成回答…
-              </div>
-            )}
+          <div className="flex gap-1 border-b px-4">
+            <TabButton
+              active={tab === "answer"}
+              onClick={() => setTab("answer")}
+            >
+              助手回答
+            </TabButton>
+            <TabButton
+              active={tab === "notes"}
+              onClick={() => setTab("notes")}
+            >
+              相关笔记{notes > 0 ? ` ${notes}` : ""}
+            </TabButton>
+          </div>
 
-            {(ask.status === "ready" || ask.status === "error") && (
-              <div className="flex flex-col gap-5">
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 pb-safe">
+            {tab === "answer" && (
+              <>
+                {ask.status === "loading" && (
+                  <div className="flex items-center gap-2 py-8 text-sm text-muted-foreground">
+                    <Loader2Icon className="size-4 animate-spin" />
+                    正在检索笔记并生成回答…
+                  </div>
+                )}
                 {ask.status === "ready" && (
-                  <div className="text-[15px] leading-[1.8] whitespace-pre-wrap">
-                    {ask.answer}
+                  <div>
+                    <div className="prose prose-neutral prose-sm max-w-none dark:prose-invert">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {ask.answer}
+                      </ReactMarkdown>
+                    </div>
                     {ask.model ? (
-                      <p className="mt-3 text-xs text-muted-foreground">
+                      <p className="mt-4 text-xs text-muted-foreground">
                         由 {ask.model} 生成
                       </p>
                     ) : null}
                   </div>
                 )}
                 {ask.status === "error" && (
-                  <p className="text-sm text-muted-foreground">{ask.message}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {ask.message}
+                  </p>
                 )}
-                {ask.related.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold">本站相关笔记</h3>
-                    <ul className="mt-2 flex flex-col gap-1.5">
-                      {ask.related.map((doc) => (
-                        <li key={doc.url}>
-                          <Link
-                            href={doc.url}
-                            className="flex min-h-11 items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-muted"
-                            onClick={() => setActive(null)}
-                          >
-                            <span className="min-w-0">
-                              <span className="block truncate font-medium">{doc.title}</span>
-                              <span className="text-xs text-muted-foreground">{doc.section}</span>
-                            </span>
-                            <DifficultyBadge difficulty={doc.difficulty} className="shrink-0" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              </>
+            )}
+
+            {tab === "notes" && (
+              <RelatedNotes related={ask.status === "idle" ? [] : ask.related} />
             )}
           </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </section>
+  );
+}
+
+function TabButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "-mb-px min-h-11 border-b-2 px-3 text-sm transition-colors",
+        active
+          ? "border-foreground font-medium text-foreground"
+          : "border-transparent text-muted-foreground hover:text-foreground",
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+function RelatedNotes({ related }: { related: RelatedHit[] }) {
+  if (related.length === 0) {
+    return (
+      <p className="py-8 text-sm text-muted-foreground">
+        暂时没有匹配到本站相关笔记。
+      </p>
+    );
+  }
+
+  return (
+    <ul className="flex flex-col gap-2">
+      {related.map((doc) => (
+        <li key={doc.url}>
+          <Link
+            href={doc.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-11 items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-sm hover:bg-muted"
+          >
+            <span className="min-w-0">
+              <span className="block font-medium leading-snug">{doc.title}</span>
+              <span className="mt-0.5 block text-xs text-muted-foreground">
+                {doc.section}
+              </span>
+            </span>
+            <DifficultyBadge difficulty={doc.difficulty} className="shrink-0" />
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }

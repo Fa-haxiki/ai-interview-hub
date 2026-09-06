@@ -10,8 +10,8 @@ sources:
   - title: "Indexes - Neo4j Cypher Manual"
     url: "https://neo4j.com/docs/cypher-manual/current/indexes/"
     lang: en
-  - title: "User Guide: Knowledge Graph Builder - Neo4j GraphRAG Python"
-    url: "https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_kg_builder.html"
+  - title: "Neo4j JavaScript Driver Manual"
+    url: "https://neo4j.com/docs/javascript-manual/current/"
     lang: en
   - title: "Welcome - Microsoft GraphRAG"
     url: "https://microsoft.github.io/graphrag/"

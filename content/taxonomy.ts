@@ -27,8 +27,22 @@ export const taxonomy: CategoryDef[] = [
     id: "ai",
     name: "AI",
     description:
-      "大模型应用与工程：RAG、Agent、编排框架、Embedding、检索基建与知识图谱。",
+      "大模型应用与工程：模型基础、Prompt、RAG、Agent、微调、推理服务、多模态与安全。",
     topics: [
+      {
+        id: "llm-basics",
+        name: "大模型基础",
+        description:
+          "Transformer、注意力、KV Cache、MoE、推理阶段与长上下文。",
+        sections: ["模型结构", "训练与推理", "上下文与长文本"],
+      },
+      {
+        id: "prompt",
+        name: "Prompt 与上下文工程",
+        description:
+          "角色与消息、少样本、思维链、结构化输出，以及怎么迭代评测提示词。",
+        sections: ["基础技巧", "推理与示范", "结构化输出", "评估与迭代"],
+      },
       {
         id: "rag",
         name: "RAG 与知识库",
@@ -78,20 +92,37 @@ export const taxonomy: CategoryDef[] = [
       {
         id: "agent",
         name: "Agent 与工具调用",
-        description: "规划、工具调用、记忆、多 Agent 协作与可靠性。",
-        sections: ["基础概念", "规划与工具调用", "记忆与状态", "评估与可靠性"],
+        description:
+          "规划、原生 function calling、记忆、MCP、多 Agent 与可靠性护栏。",
+        sections: ["基础概念", "规划与工具调用", "记忆与协议", "评估与可靠性"],
       },
       {
-        id: "llm-basics",
-        name: "大模型基础",
-        description: "Transformer、注意力、推理优化、上下文窗口等基础知识。",
-        sections: ["模型结构", "训练与推理", "上下文与长文本"],
+        id: "finetune",
+        name: "微调与对齐",
+        description:
+          "SFT、LoRA、偏好对齐，以及微调相对 RAG / Prompt 的适用边界。",
+        sections: ["方法选型", "参数高效微调", "对齐"],
       },
       {
-        id: "prompt",
-        name: "Prompt 工程",
-        description: "提示词设计、结构化输出、少样本与思维链。",
-        sections: ["基础技巧", "结构化输出", "评估与迭代"],
+        id: "serving",
+        name: "推理服务与部署",
+        description:
+          "Prefill/Decode、PagedAttention、连续批处理、量化与延迟指标。",
+        sections: ["推理原理", "服务化", "成本与性能"],
+      },
+      {
+        id: "multimodal",
+        name: "多模态",
+        description:
+          "视觉语言模型、文档理解，以及图文 Embedding 怎么进检索。",
+        sections: ["视觉语言模型", "文档理解", "多模态检索"],
+      },
+      {
+        id: "safety",
+        name: "安全与红队",
+        description:
+          "提示注入、间接注入、工具越权、输出护栏与数据泄漏。",
+        sections: ["提示注入", "工具与数据", "护栏"],
       },
     ],
   },

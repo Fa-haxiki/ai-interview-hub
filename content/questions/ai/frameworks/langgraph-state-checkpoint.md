@@ -8,10 +8,10 @@ order: 2
 tags: [State, Reducer, Checkpointer, Persistence]
 sources:
   - title: "Persistence - LangGraph docs"
-    url: "https://docs.langchain.com/oss/python/langgraph/persistence"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/persistence"
     lang: en
   - title: "LangGraph overview"
-    url: "https://docs.langchain.com/oss/python/langgraph/overview"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/overview"
     lang: en
   - title: "LangGraph - The LangChain Blog"
     url: "https://blog.langchain.dev/langgraph/"
@@ -26,20 +26,20 @@ createdAt: "2026-09-06"
 
 ## State
 
-State 通常是 `TypedDict` 或 dataclass，例如 `messages`、`query`、`docs`、`retry_count`。每个节点读整份（或需要的字段），返回一个「要更新的字段」补丁，而不是重写整个对象。消息列表这类字段几乎总会随步骤增长，所以默认覆盖语义不够用。
+State 通常用 `Annotation.Root` 或 Zod `StateSchema` 声明，例如 `messages`、`query`、`docs`、`retryCount`。每个节点读整份（或需要的字段），返回一个「要更新的字段」补丁，而不是重写整个对象。消息列表这类字段几乎总会随步骤增长，所以默认覆盖语义不够用。
 
 ## Reducer
 
 当多个节点同时写同一个 key，或同一字段被连续更新时，Reducer 决定合并规则：
 
 - **overwrite**：后写覆盖前写，适合当前 query、最终答案；
-- **append**（如 `operator.add`）：把新元素追加到列表，适合 `messages`、工具调用记录。
+- **append**（如 `(left, right) => left.concat(right)`，或现成的 `messagesStateReducer`）：把新元素追加到列表，适合 `messages`、工具调用记录。
 
 漏配 Reducer 是常见坑：两个并行节点都返回 `messages`，后到的会把先到的盖掉，对话历史就缺了一截。设计 State 时我会先标清每个字段是「单值」还是「累积」。
 
 ## Checkpointer
 
-`compile(checkpointer=...)` 之后，每执行完一个节点就落一份 checkpoint。用同一个 `thread_id` 再 `invoke`，从图停下的地方继续。这直接支撑三件事：断点续跑、时间旅行（回到某步重放或改 State）、HITL 恢复。Checkpointer 管的是**线程内短记忆**；跨会话的用户偏好要用 Store，两者不要混为一谈。内存版 `InMemorySaver` 重启即丢，生产要换成 Postgres / SQLite 等持久实现。`thread_id` 本身也有约束，例如 Postgres 实现里过长会写库失败，生产上我用 UUID 或短哈希，而不是把整段用户问题当 ID。
+`compile({ checkpointer })` 之后，每执行完一个节点就落一份 checkpoint。用同一个 `configurable.thread_id` 再 `invoke`，从图停下的地方继续。这直接支撑三件事：断点续跑、时间旅行（回到某步重放或改 State）、HITL 恢复。Checkpointer 管的是**线程内短记忆**；跨会话的用户偏好要用 Store，两者不要混为一谈。内存版 `MemorySaver`（`@langchain/langgraph`）重启即丢，生产要换成 Postgres / SQLite 等持久实现。`thread_id` 本身也有约束，例如 Postgres 实现里过长会写库失败，生产上我用 UUID 或短哈希，而不是把整段用户问题当 ID。
 
 ## 为什么生产必开
 

@@ -36,17 +36,20 @@ createdAt: "2026-09-06"
 4. **Agentic 循环。** 把上面的逻辑交给 Agent：每轮检索后判断“够不够、还缺什么”，缺的变成下一轮 query。最灵活，但延迟和成本不可控。
 5. **GraphRAG 的关系遍历。** 离线把实体关系抽成图，多跳变成图上的路径查询，一次搞定；代价是建图成本，适合多跳问题占比很高的语料。
 
-```python
-def multi_hop(question, retrieve, rerank, llm, max_hops=3):
-    ctx, query = [], question
-    for _ in range(max_hops):
-        ctx += rerank(retrieve(query), threshold=0.3)
-        verdict = llm(f"上下文：{ctx}\n问题：{question}\n"
-                      "能回答就输出 ANSWER: ...；否则输出 NEED: 还缺什么")
-        if verdict.startswith("ANSWER:"):
-            return verdict
-        query = verdict.removeprefix("NEED:").strip()
-    return llm(f"基于已有上下文尽力回答。上下文：{ctx}\n问题：{question}")
+```ts
+async function multiHop(question, { retrieve, rerank, llm, maxHops = 3 }) {
+  let ctx = [];
+  let query = question;
+  for (let i = 0; i < maxHops; i++) {
+    ctx = ctx.concat(rerank(await retrieve(query), { threshold: 0.3 }));
+    const verdict = await llm(
+      `上下文：${JSON.stringify(ctx)}\n问题：${question}\n能回答就输出 ANSWER: ...；否则输出 NEED: 还缺什么`,
+    );
+    if (verdict.startsWith("ANSWER:")) return verdict;
+    query = verdict.replace(/^NEED:\s*/, "").trim();
+  }
+  return llm(`基于已有上下文尽力回答。上下文：${JSON.stringify(ctx)}\n问题：${question}`);
+}
 ```
 
 ## 怎么评估

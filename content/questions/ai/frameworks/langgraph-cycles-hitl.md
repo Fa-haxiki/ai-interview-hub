@@ -8,10 +8,10 @@ order: 3
 tags: [LangGraph, HITL, interrupt, 条件边]
 sources:
   - title: "Interrupts - LangGraph docs"
-    url: "https://docs.langchain.com/oss/python/langgraph/interrupts"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/interrupts"
     lang: en
   - title: "Persistence - LangGraph docs"
-    url: "https://docs.langchain.com/oss/python/langgraph/persistence"
+    url: "https://docs.langchain.com/oss/javascript/langgraph/persistence"
     lang: en
   - title: "LangGraph - The LangChain Blog"
     url: "https://blog.langchain.dev/langgraph/"
@@ -39,7 +39,7 @@ START → retrieve → evaluate
 
 ## 人机协同
 
-编译时可以用 `interrupt_before` / `interrupt_after` 在指定节点前后暂停，典型场景是工具节点执行前让人看一眼参数：删数据、转账、对外发邮件。动态场景则在节点里调用 `interrupt()`，按业务条件才暂停。中断会依赖 Checkpointer 把 State 冻住；人审批或直接改字段后，用**同一个 `thread_id`** 再 invoke 即可从断点继续。换 ID 等于另开一条空线程，审批结果对不上。没有 Checkpointer 的中断只是同步卡住当前进程，发布或超时后状态就没了，谈不上真正的人机协同。
+编译时可以用 `interruptBefore` / `interruptAfter` 在指定节点前后暂停，典型场景是工具节点执行前让人看一眼参数：删数据、转账、对外发邮件。动态场景则在节点里调用 `interrupt()`，按业务条件才暂停。中断会依赖 Checkpointer 把 State 冻住；人审批或直接改字段后，用**同一个 `configurable.thread_id`** 再 invoke 即可从断点继续。换 ID 等于另开一条空线程，审批结果对不上。没有 Checkpointer 的中断只是同步卡住当前进程，发布或超时后状态就没了，谈不上真正的人机协同。
 
 HITL 不是把每一步都交给人，只挡高风险副作用。低风险检索循环用预算闸门自动走完即可。审批界面要展示将要调用的工具名、参数和当前 State 摘要，让人能改参数再放行，而不是只给一个「同意 / 拒绝」按钮。拒绝时路由到解释节点或结束，不要默默重试同一个危险调用。
 

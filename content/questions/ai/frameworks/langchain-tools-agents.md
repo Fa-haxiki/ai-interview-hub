@@ -8,10 +8,10 @@ order: 3
 tags: [Agent, Tool, Function Calling]
 sources:
   - title: "Agents - LangChain docs"
-    url: "https://python.langchain.com/docs/concepts/agents/"
+    url: "https://docs.langchain.com/oss/javascript/langchain/agents"
     lang: en
   - title: "LangChain overview"
-    url: "https://docs.langchain.com/oss/python/langchain/overview"
+    url: "https://docs.langchain.com/oss/javascript/langchain/overview"
     lang: en
   - title: "How to think about agent frameworks"
     url: "https://blog.langchain.dev/how-to-think-about-agent-frameworks/"
@@ -30,10 +30,10 @@ createdAt: "2026-09-06"
 
 - **name**：模型用来点名的标识；
 - **description**：决定模型何时会选它，写差了比代码 bug 更致命；
-- **schema**：参数的 JSON Schema / Pydantic，约束调用参数；
+- **schema**：参数的 Zod / JSON Schema，约束调用参数；
 - **执行函数**：真正发请求、查库、检索文档。
 
-LangChain 把函数包装成 Tool，再 `bind_tools` 到 Chat Model 上。模型侧看到的是一份工具清单，不是一段自由文本说明书。工具数量要克制：十几个描述含糊的 Tool 比三五个边界清晰的更容易选错，必要时先用路由把工具集缩小再交给 Agent。
+LangChain 把函数包装成 Tool（`tool` from `langchain`），再 `bindTools` 到 Chat Model 上。模型侧看到的是一份工具清单，不是一段自由文本说明书。工具数量要克制：十几个描述含糊的 Tool 比三五个边界清晰的更容易选错，必要时先用路由把工具集缩小再交给 Agent。
 
 ## Agent 循环
 
@@ -51,5 +51,5 @@ LangChain 把函数包装成 Tool，再 `bind_tools` 到 Chat Model 上。模型
 
 ## 可能的追问
 
-- `create_agent` 和自己写循环有什么差别？前者是现成 harness，底层已经接到 LangGraph；自己写则完全控制每一步塞给模型的 messages。
+- `createAgent` 和自己写循环有什么差别？前者是现成 harness，底层已经接到 LangGraph；自己写则完全控制每一步塞给模型的 messages。
 - Tool description 怎么写才不容易选错？写清「何时用 / 何时不要用」、参数含义和副作用，比堆砌形容词有用。

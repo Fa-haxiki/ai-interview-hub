@@ -29,13 +29,17 @@ RRF(d) = Σ_i 1 / (k + rank_i(d))
 
 `rank_i(d)` 是文档 d 在第 i 路结果中的名次（从 1 开始），`k` 是平滑常数，论文里取 60。没在某一路出现的文档，那一路贡献为 0。
 
-```python
-def rrf_merge(result_lists, k=60):
-    scores = {}
-    for results in result_lists:
-        for rank, doc in enumerate(results, start=1):
-            scores[doc.id] = scores.get(doc.id, 0) + 1 / (k + rank)
-    return sorted(scores.items(), key=lambda x: x[1], reverse=True)
+```ts
+function rrfMerge(resultLists, k = 60) {
+  const scores = new Map();
+  for (const results of resultLists) {
+    results.forEach((doc, index) => {
+      const rank = index + 1;
+      scores.set(doc.id, (scores.get(doc.id) ?? 0) + 1 / (k + rank));
+    });
+  }
+  return [...scores.entries()].sort((a, b) => b[1] - a[1]);
+}
 ```
 
 `k` 的作用是压平头部差距：k 越大，第 1 名和第 10 名的贡献越接近，越强调“多路共同出现”；k 越小越偏向各路的第一名。
