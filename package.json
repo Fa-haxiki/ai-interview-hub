@@ -9,7 +9,7 @@
     "lint": "eslint",
     "preview": "pnpm dlx serve out",
     "new": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/new-question.mjs",
-    "deploy:pages": "wrangler pages deploy out"
+    "deploy:cf": "wrangler deploy"
   },
   "dependencies": {
     "@shikijs/rehype": "^4.4.3",

@@ -1,6 +1,11 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "ai-interview-hub",
-  "pages_build_output_dir": "./out",
-  "compatibility_date": "2026-09-05"
+  "compatibility_date": "2026-09-05",
+  // Workers Builds 默认执行 `npx wrangler deploy`，用 assets 指向静态导出目录
+  "assets": {
+    "directory": "./out",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page",
+  },
 }

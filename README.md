@@ -2,7 +2,7 @@
 
 个人自用的面试题笔记站：把前端、后端、AI 方向的高频面试题按「分类 → 主题 → 小节」整理成 Markdown，用**面试者的口吻**作答，每题附参考来源（英文来源翻译整理后标记）。一期收录 AI / RAG 与知识库方向 40+ 道题。
 
-纯静态站点，构建产物部署在 Cloudflare Pages（免费 `*.pages.dev` 域名），`git push` 即自动发布。
+纯静态站点，构建产物部署在 Cloudflare Workers（静态资源），`git push` 即自动发布。
 
 ## 技术栈
 
@@ -38,7 +38,7 @@ src/
   components/                 # 站点组件与 shadcn/ui
   lib/markdown.ts             # Markdown → HTML、TOC 提取、摘要
   lib/questions/              # QuestionRepository 接口 + MarkdownRepository 实现
-wrangler.jsonc                # Cloudflare Pages 配置（输出目录 out）
+wrangler.jsonc                # Cloudflare Workers 静态资源（assets.directory = out）
 ```
 
 数据访问统一走 `src/lib/questions/repository.ts` 的 `QuestionRepository` 接口，页面与搜索索引都不直接读文件。二期若要加后台录入 + 云数据库，只需实现一个新的 Repository 并在 `src/lib/questions/index.ts` 里替换即可。
@@ -97,27 +97,28 @@ updatedAt: "2026-09-06"      # 可选
 
 编辑 `content/taxonomy.ts`：分类下加 `topics`，主题下加 `sections`。没有题目的主题会在站内显示「筹备中」，不需要额外配置。
 
-## 部署到 Cloudflare Pages
+## 部署到 Cloudflare
+
+当前控制台的 Workers Builds 会先跑 `pnpm build`，再执行 `npx wrangler deploy`。`wrangler.jsonc` 用 `assets.directory = "./out"` 把静态导出目录交给 Wrangler，不要再用 `wrangler pages deploy`。
 
 ### 方式一：连接 GitHub 仓库（推荐，push 自动部署）
 
-1. 登录 [Cloudflare 控制台](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**，选择本仓库。
+1. 登录 [Cloudflare 控制台](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → 连接本仓库。
 2. 构建配置：
-   - Framework preset：**Next.js (Static HTML Export)**
    - Build command：`pnpm build`
-   - Build output directory：`out`
-   - 环境变量：`NODE_VERSION = 22`、`PNPM_VERSION = 11.12.0`（v3 构建镜像不会从 lockfile 推断 pnpm 版本）
-3. 保存并部署。完成后得到 `https://<project>.pages.dev`，之后每次 push `main` 自动发布，其他分支会生成预览地址。
+   - Deploy command：`npx wrangler deploy`（Workers Builds 默认值，不要改成 `wrangler pages deploy`）
+   - 环境变量：`NODE_VERSION = 22`、`PNPM_VERSION = 11.12.0`
+3. 保存后 push `main` 即自动发布，得到 `https://<name>.workers.dev` 或绑定的自定义域名；其他分支会生成预览。
 
 ### 方式二：本地用 wrangler 直接上传
 
 ```bash
 pnpm dlx wrangler login     # 首次登录，会打开浏览器授权
 pnpm build
-pnpm run deploy:pages       # = wrangler pages deploy out，首次会创建项目
+pnpm run deploy:cf          # = wrangler deploy，上传 out/
 ```
 
-项目名与输出目录在 `wrangler.jsonc` 中配置。注意 `pnpm deploy` 是 pnpm 内置命令，这里必须用 `pnpm run deploy:pages`。
+注意 `pnpm deploy` 是 pnpm 内置命令，这里必须用 `pnpm run deploy:cf`。
 
 ## 二期规划
 
