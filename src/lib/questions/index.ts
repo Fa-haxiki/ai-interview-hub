@@ -4,7 +4,7 @@ import { MarkdownRepository } from "./markdown-repository";
 import type { QuestionRepository } from "./repository";
 import type { QuestionMeta } from "./types";
 
-export type { Question, QuestionMeta, QuestionSource, TocItem, Difficulty } from "./types";
+export type { Question, QuestionMeta, QuestionSource, TocItem, FollowUp, Difficulty } from "./types";
 export { DIFFICULTY_LABEL } from "./types";
 
 /** 当前使用的数据源；二期切换到数据库时只需替换这里 */

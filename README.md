@@ -99,7 +99,17 @@ updatedAt: "2026-09-06"      # 可选
 
 ## 部署到 Cloudflare
 
-当前控制台的 Workers Builds 会先跑 `pnpm build`，再执行 `npx wrangler deploy`。`wrangler.jsonc` 用 `assets.directory = "./out"` 把静态导出目录交给 Wrangler，不要再用 `wrangler pages deploy`。
+当前控制台的 Workers Builds 会先跑 `pnpm build`，再执行 `npx wrangler deploy`。`wrangler.jsonc` 用 Worker（`workers/index.js`）托管 `/api/ask`（Cloudflare Workers AI 免费模型），并用 `assets.directory = "./out"` 托管静态页。
+
+详情页「可能的追问」可点击：先检索本站笔记，再调用模型生成面试口吻短答。弹窗里可以切换 Workers AI 模型（默认 Qwen3，也可选 GLM Flash / Llama 8B / 70B）。本地 `pnpm preview` 没有 AI 绑定，只会展示相关笔记。
+
+若要改用 DeepSeek、Groq、硅基流动等 OpenAI 兼容接口，在 Cloudflare 项目里加密钥（不要写进仓库）：
+
+- `OPENAI_API_KEY`
+- `OPENAI_BASE_URL`（例如 `https://api.deepseek.com/v1`）
+- `OPENAI_MODEL`（例如 `deepseek-chat`）
+
+然后在弹窗里选「自定义（OpenAI 兼容）」。默认模型可用变量 `DEFAULT_MODEL` 改为 `qwen3` / `glm-flash` / `llama-8b` / `llama-70b` / `openai`。
 
 ### 方式一：连接 GitHub 仓库（推荐，push 自动部署）
 

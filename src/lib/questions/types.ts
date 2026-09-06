@@ -18,6 +18,13 @@ export interface TocItem {
   depth: 2 | 3;
 }
 
+/** 正文「可能的追问」里拆出的问题，供点击唤起助手 */
+export interface FollowUp {
+  question: string;
+  /** 原稿里写在问号后面的提示性短答，可空 */
+  hint?: string;
+}
+
 /** 列表页 / 搜索索引使用的轻量元信息 */
 export interface QuestionMeta {
   slug: string;
@@ -47,6 +54,7 @@ export interface Question extends QuestionMeta {
   /** 正文纯文本，供搜索索引使用 */
   plainText: string;
   readingMinutes: number;
+  followUps: FollowUp[];
 }
 
 export const DIFFICULTY_LABEL: Record<Difficulty, string> = {

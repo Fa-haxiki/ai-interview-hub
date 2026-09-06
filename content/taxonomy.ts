@@ -26,7 +26,8 @@ export const taxonomy: CategoryDef[] = [
   {
     id: "ai",
     name: "AI",
-    description: "大模型应用与工程：RAG、Agent、模型基础与评估。",
+    description:
+      "大模型应用与工程：RAG、Agent、编排框架、Embedding、检索基建与知识图谱。",
     topics: [
       {
         id: "rag",
@@ -45,6 +46,34 @@ export const taxonomy: CategoryDef[] = [
           "高级 RAG",
           "生产工程与系统设计",
         ],
+      },
+      {
+        id: "frameworks",
+        name: "LangChain 与 LangGraph",
+        description:
+          "编排框架的核心抽象、图工作流、检查点与生产落地取舍。",
+        sections: ["LangChain 核心", "LangGraph", "生产实践"],
+      },
+      {
+        id: "embedding",
+        name: "Embedding",
+        description:
+          "向量表示的训练原理、评测榜单、指令前缀、量化与领域微调。",
+        sections: ["原理与训练", "选型与评测", "工程实践"],
+      },
+      {
+        id: "search-infra",
+        name: "检索基建",
+        description:
+          "Elasticsearch 倒排检索与 Milvus 向量库的原理、参数与 RAG 落地。",
+        sections: ["Elasticsearch", "Milvus", "选型对比"],
+      },
+      {
+        id: "knowledge-graph",
+        name: "知识图谱与 Neo4j",
+        description:
+          "属性图模型、Cypher、图谱构建，以及图检索与 RAG 的结合。",
+        sections: ["图基础", "Neo4j", "GraphRAG 工程"],
       },
       {
         id: "agent",

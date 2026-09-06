@@ -99,6 +99,7 @@ async function readQuestionFile(filePath: string): Promise<Question> {
     toc: rendered.toc,
     plainText: rendered.plainText,
     readingMinutes: estimateReadingMinutes(rendered.plainText),
+    followUps: rendered.followUps,
   };
 }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { DifficultyBadge } from "@/components/difficulty-badge";
+import { FollowUpAssistant } from "@/components/follow-up-assistant";
 import { PrevNext } from "@/components/prev-next";
 import { SiteBreadcrumb } from "@/components/site-breadcrumb";
 import { SourceList } from "@/components/source-list";
@@ -98,6 +99,11 @@ export default async function QuestionPage({
           dangerouslySetInnerHTML={{ __html: question.html }}
         />
 
+        <FollowUpAssistant
+          followUps={question.followUps}
+          pageTitle={question.title}
+          pageUrl={question.url}
+        />
         <SourceList sources={question.sources} />
         <PrevNext prev={prev} next={next} />
       </article>

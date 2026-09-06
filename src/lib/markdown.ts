@@ -12,13 +12,14 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
-import type { TocItem } from "@/lib/questions/types";
+import type { FollowUp, TocItem } from "@/lib/questions/types";
 
 export interface RenderedMarkdown {
   html: string;
   toc: TocItem[];
   plainText: string;
   summary: string;
+  followUps: FollowUp[];
 }
 
 /** 给表格套一层可横向滚动的容器，避免在手机上撑破布局 */
@@ -80,14 +81,55 @@ function extractSummary(tree: MdastRoot, maxLength = 120): string {
   return "";
 }
 
+function parseFollowUp(text: string): FollowUp {
+  const normalized = text
+    .replace(/^\*?\*?追问[：:]\*?\*?\s*/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const mark = normalized.search(/[？?]/);
+  if (mark >= 0 && mark < normalized.length - 1) {
+    const question = normalized.slice(0, mark + 1).trim();
+    const hint = normalized.slice(mark + 1).trim();
+    return hint ? { question, hint } : { question };
+  }
+  return { question: normalized };
+}
+
+/** 抽出「可能的追问」列表，并从 AST 删除该节，避免正文与交互组件重复 */
+function extractFollowUps(tree: MdastRoot): FollowUp[] {
+  const followUps: FollowUp[] = [];
+  const { children } = tree;
+  for (let i = 0; i < children.length; i++) {
+    const node = children[i];
+    if (node.type !== "heading") continue;
+    if (!/可能的追问/.test(mdastToString(node))) continue;
+
+    let end = i + 1;
+    while (end < children.length && children[end].type !== "heading") {
+      const block = children[end];
+      if (block.type === "list") {
+        for (const item of block.children) {
+          const text = mdastToString(item).replace(/\s+/g, " ").trim();
+          if (text) followUps.push(parseFollowUp(text));
+        }
+      }
+      end += 1;
+    }
+    children.splice(i, end - i);
+    break;
+  }
+  return followUps;
+}
+
 export async function renderMarkdown(markdown: string): Promise<RenderedMarkdown> {
   const mdast = processor.parse(markdown) as MdastRoot;
+  const followUps = extractFollowUps(mdast);
   const toc = extractToc(mdast);
   const summary = extractSummary(mdast);
   const plainText = mdastToString(mdast).replace(/\s+/g, " ").trim();
   const hast = await processor.run(mdast);
   const html = processor.stringify(hast as HastRoot);
-  return { html: String(html), toc, plainText, summary };
+  return { html: String(html), toc, plainText, summary, followUps };
 }
 
 /** 按中文阅读速度估算（约 400 字/分钟） */
