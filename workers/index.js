@@ -174,11 +174,70 @@ async function handleAsk(request, env) {
   }
 }
 
+const PROGRESS_KEY = "last_read";
+const PROGRESS_TTL = 60 * 60 * 24 * 365; // 一年
+
+function isValidProgress(body) {
+  if (!body || typeof body !== "object") return false;
+  if (typeof body.path !== "string" || !body.path.startsWith("/")) return false;
+  if (typeof body.title !== "string" || !body.title) return false;
+  if (typeof body.scrollRatio !== "number" || body.scrollRatio < 0 || body.scrollRatio > 1)
+    return false;
+  return true;
+}
+
+async function handleProgress(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204 });
+  }
+  if (!env.PROGRESS) {
+    return json({ error: "未绑定 KV PROGRESS" }, 503);
+  }
+  if (request.method === "GET") {
+    const raw = await env.PROGRESS.get(PROGRESS_KEY);
+    if (!raw) return json({ progress: null });
+    try {
+      return json({ progress: JSON.parse(raw) });
+    } catch {
+      return json({ progress: null });
+    }
+  }
+  if (request.method !== "PUT") {
+    return json({ error: "只接受 GET / PUT" }, 405);
+  }
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "请求体不是合法 JSON" }, 400);
+  }
+  if (!isValidProgress(body)) {
+    return json({ error: "进度字段不合法" }, 400);
+  }
+  const record = {
+    category: typeof body.category === "string" ? body.category : "",
+    topic: typeof body.topic === "string" ? body.topic : "",
+    slug: typeof body.slug === "string" ? body.slug : "",
+    title: String(body.title).slice(0, 300),
+    section: typeof body.section === "string" ? String(body.section).slice(0, 100) : "",
+    path: String(body.path).slice(0, 500),
+    scrollRatio: body.scrollRatio,
+    updatedAt: new Date().toISOString(),
+  };
+  await env.PROGRESS.put(PROGRESS_KEY, JSON.stringify(record), {
+    expirationTtl: PROGRESS_TTL,
+  });
+  return json({ ok: true, progress: record });
+}
+
 const worker = {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (pathname === "/api/ask" || pathname === "/api/ask/") {
       return handleAsk(request, env);
+    }
+    if (pathname === "/api/progress" || pathname === "/api/progress/") {
+      return handleProgress(request, env);
     }
     return env.ASSETS.fetch(request);
   },

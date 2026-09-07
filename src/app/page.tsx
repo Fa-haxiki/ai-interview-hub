@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 import { CategoryCard } from "@/components/category-card";
+import { ContinueReading } from "@/components/continue-reading";
 import { QuestionRow } from "@/components/question-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,6 +54,8 @@ export default async function HomePage() {
           {recent[0] && ` · 最近更新 ${recent[0].updatedAt}`}
         </p>
       </section>
+
+      <ContinueReading />
 
       <section aria-labelledby="categories-heading">
         <h2 id="categories-heading" className="text-xl font-semibold tracking-tight">

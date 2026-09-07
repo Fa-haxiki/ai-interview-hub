@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { DifficultyBadge } from "@/components/difficulty-badge";
 import { FollowUpAssistant } from "@/components/follow-up-assistant";
 import { PrevNext } from "@/components/prev-next";
+import { ProgressTracker } from "@/components/progress-tracker";
 import { SiteBreadcrumb } from "@/components/site-breadcrumb";
 import { SourceList } from "@/components/source-list";
 import { Toc, TocCollapsible } from "@/components/toc";
@@ -103,6 +104,16 @@ export default async function QuestionPage({
           followUps={question.followUps}
           pageTitle={question.title}
           pageUrl={question.url}
+        />
+        <ProgressTracker
+          question={{
+            category: question.category,
+            topic: question.topic,
+            slug: question.slug,
+            title: question.title,
+            section: question.section,
+            path: question.url,
+          }}
         />
         <SourceList sources={question.sources} />
         <PrevNext prev={prev} next={next} />

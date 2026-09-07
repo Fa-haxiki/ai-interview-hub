@@ -13,6 +13,12 @@
   "ai": {
     "binding": "AI",
   },
+  "kv_namespaces": [
+    {
+      "binding": "PROGRESS",
+      "id": "578209ff04644c48b2c8166d0912e856"
+    }
+  ],
   "vars": {
     "DEFAULT_MODEL": "qwen3",
   },
