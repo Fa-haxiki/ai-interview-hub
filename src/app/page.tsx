@@ -53,9 +53,8 @@ export default async function HomePage() {
           共 {total} 道题 · {topicCount} 个主题
           {recent[0] && ` · 最近更新 ${recent[0].updatedAt}`}
         </p>
+        <ContinueReading />
       </section>
-
-      <ContinueReading />
 
       <section aria-labelledby="categories-heading">
         <h2 id="categories-heading" className="text-xl font-semibold tracking-tight">

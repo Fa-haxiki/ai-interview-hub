@@ -25,10 +25,10 @@ export function ContinueReading() {
   if (loading || !progress) return null;
 
   return (
-    <section aria-labelledby="continue-heading" className="mt-10 sm:mt-12">
+    <section aria-labelledby="continue-heading" className="mt-6 max-w-2xl">
       <Link
         href={progress.path}
-        className="group block rounded-xl border bg-card p-4 transition-colors hover:border-brand/40 hover:bg-muted/30 sm:p-5"
+        className="group block rounded-xl border bg-card p-4 transition-colors hover:border-brand/40 hover:bg-muted/30"
       >
         <div className="flex items-center gap-2 text-xs font-medium text-brand">
           <BookOpenIcon className="size-3.5" />
