@@ -20,21 +20,16 @@ export function QaAccordion({ items, packUrl }: { items: QaItem[]; packUrl: stri
         return (
           <li key={`${index}-${item.question}`}>
             <Collapsible>
-              <div className="flex items-start gap-1">
-                <CollapsibleTrigger className="group flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 text-left transition-colors hover:bg-muted/40">
-                  <span className="mt-0.5 w-7 shrink-0 text-xs font-medium tabular-nums text-muted-foreground">
-                    {index + 1}
-                  </span>
-                  <span className="min-w-0 flex-1 text-[15px] font-medium leading-snug text-foreground sm:text-base">
-                    {item.question}
-                    <CheckinCount checkinKey={checkinKey} />
-                  </span>
-                  <ChevronDownIcon className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
-                </CollapsibleTrigger>
-                <div className="shrink-0 py-3 pr-3">
-                  <CheckinButton checkinKey={checkinKey} />
-                </div>
-              </div>
+              <CollapsibleTrigger className="group flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors hover:bg-muted/40">
+                <span className="mt-0.5 w-7 shrink-0 text-xs font-medium tabular-nums text-muted-foreground">
+                  {index + 1}
+                </span>
+                <span className="min-w-0 flex-1 text-[15px] font-medium leading-snug text-foreground sm:text-base">
+                  {item.question}
+                  <CheckinCount checkinKey={checkinKey} />
+                </span>
+                <ChevronDownIcon className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+              </CollapsibleTrigger>
               <CollapsibleContent>
                 {item.answerHtml ? (
                   <div
@@ -46,6 +41,9 @@ export function QaAccordion({ items, packUrl }: { items: QaItem[]; packUrl: stri
                     原文没有单独的参考答案。
                   </p>
                 )}
+                <div className="flex items-center justify-end border-t bg-muted/10 px-4 py-3">
+                  <CheckinButton checkinKey={checkinKey} size="sm" />
+                </div>
               </CollapsibleContent>
             </Collapsible>
           </li>

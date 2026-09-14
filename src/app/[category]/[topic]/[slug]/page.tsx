@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { CheckinButton } from "@/components/checkin-button";
 import { CheckinCount } from "@/components/checkin-count";
+import { CheckinDock } from "@/components/checkin-dock";
 import { DifficultyBadge } from "@/components/difficulty-badge";
 import { FollowUpAssistant } from "@/components/follow-up-assistant";
 import { PrevNext } from "@/components/prev-next";
@@ -80,13 +80,9 @@ export default async function QuestionPage({
         />
 
         <header className="mt-4">
-          <div className="flex items-start justify-between gap-3">
-            <h1 className="min-w-0 text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
-              {question.title}
-              {!isPack && <CheckinCount checkinKey={question.url} />}
-            </h1>
-            {!isPack && <CheckinButton checkinKey={question.url} className="mt-1.5" />}
-          </div>
+          <h1 className="text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
+            {question.title}
+          </h1>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground sm:text-sm">
             {!isPack && <DifficultyBadge difficulty={question.difficulty} />}
             {isPack ? (
@@ -106,6 +102,7 @@ export default async function QuestionPage({
               <CalendarIcon className="size-3.5" />
               更新于 {question.updatedAt}
             </span>
+            {!isPack && <CheckinCount checkinKey={question.url} withIcon />}
           </div>
           {question.notes && (
             <p className="mt-2 text-sm text-muted-foreground">{question.notes}</p>
@@ -159,6 +156,8 @@ export default async function QuestionPage({
         <SourceList sources={question.sources} />
         <PrevNext prev={prev} next={next} />
       </article>
+
+      {!isPack && <CheckinDock checkinKey={question.url} />}
 
       {!isPack && (
         <aside className="hidden lg:block">
