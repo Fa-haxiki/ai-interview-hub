@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
+import { CheckinCount } from "@/components/checkin-count";
 import type { QuestionMeta } from "@/lib/questions";
 
 function NavCard({
@@ -25,6 +26,7 @@ function NavCard({
       </span>
       <span className="text-sm font-medium leading-snug group-hover:text-brand">
         {question.title}
+        {question.kind !== "qa-pack" && <CheckinCount checkinKey={question.url} />}
       </span>
     </Link>
   );

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
+import { CheckinProvider } from "@/components/checkin-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -33,9 +34,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
           <TooltipProvider>
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
+            <CheckinProvider>
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </CheckinProvider>
           </TooltipProvider>
         </ThemeProvider>
       </body>

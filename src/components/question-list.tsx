@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CheckinCount } from "@/components/checkin-count";
 import { DifficultyBadge } from "@/components/difficulty-badge";
 import type { QuestionMeta } from "@/lib/questions";
 
@@ -21,6 +22,7 @@ export function QuestionRow({
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-[15px] font-medium leading-snug text-foreground group-hover:text-brand sm:text-base">
             {question.title}
+            {question.kind !== "qa-pack" && <CheckinCount checkinKey={question.url} />}
           </h3>
           <DifficultyBadge difficulty={question.difficulty} className="mt-0.5 shrink-0" />
         </div>

@@ -230,6 +230,60 @@ async function handleProgress(request, env) {
   return json({ ok: true, progress: record });
 }
 
+const CHECKIN_KEY = "checkins";
+const CHECKIN_TTL = 60 * 60 * 24 * 365;
+const MAX_CHECKIN_KEYS = 5000;
+
+function isValidCheckinStore(body) {
+  if (!body || typeof body !== "object") return false;
+  if (!body.counts || typeof body.counts !== "object" || Array.isArray(body.counts)) return false;
+  const entries = Object.entries(body.counts);
+  if (entries.length > MAX_CHECKIN_KEYS) return false;
+  for (const [key, value] of entries) {
+    if (typeof key !== "string" || !key.startsWith("/") || key.length > 500) return false;
+    if (!Number.isInteger(value) || value < 1 || value > 99999) return false;
+  }
+  return true;
+}
+
+async function handleCheckin(request, env) {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204 });
+  }
+  if (!env.PROGRESS) {
+    return json({ error: "未绑定 KV PROGRESS" }, 503);
+  }
+  if (request.method === "GET") {
+    const raw = await env.PROGRESS.get(CHECKIN_KEY);
+    if (!raw) return json({ checkins: null });
+    try {
+      return json({ checkins: JSON.parse(raw) });
+    } catch {
+      return json({ checkins: null });
+    }
+  }
+  if (request.method !== "PUT") {
+    return json({ error: "只接受 GET / PUT" }, 405);
+  }
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "请求体不是合法 JSON" }, 400);
+  }
+  if (!isValidCheckinStore(body)) {
+    return json({ error: "打卡数据不合法" }, 400);
+  }
+  const record = {
+    counts: body.counts,
+    updatedAt: new Date().toISOString(),
+  };
+  await env.PROGRESS.put(CHECKIN_KEY, JSON.stringify(record), {
+    expirationTtl: CHECKIN_TTL,
+  });
+  return json({ ok: true, checkins: record });
+}
+
 const worker = {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
@@ -238,6 +292,9 @@ const worker = {
     }
     if (pathname === "/api/progress" || pathname === "/api/progress/") {
       return handleProgress(request, env);
+    }
+    if (pathname === "/api/checkin" || pathname === "/api/checkin/") {
+      return handleCheckin(request, env);
     }
     return env.ASSETS.fetch(request);
   },

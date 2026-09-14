@@ -5,6 +5,7 @@ import { SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { CheckinCount } from "@/components/checkin-count";
 import { DifficultyBadge } from "@/components/difficulty-badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -172,7 +173,10 @@ export function SiteSearch() {
                         className="min-h-11 items-start py-2"
                       >
                         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                          <span className="truncate font-medium">{doc.title}</span>
+                          <span className="truncate font-medium">
+                            {doc.title}
+                            <CheckinCount checkinKey={doc.url} />
+                          </span>
                           <span className="truncate text-xs text-muted-foreground">
                             {doc.section}
                             {doc.tags.length > 0 && ` · ${doc.tags.slice(0, 3).join(" / ")}`}
