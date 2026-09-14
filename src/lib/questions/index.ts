@@ -4,8 +4,12 @@ import { MarkdownRepository } from "./markdown-repository";
 import type { QuestionRepository } from "./repository";
 import type { QuestionMeta } from "./types";
 
-export type { Question, QuestionMeta, QuestionSource, TocItem, FollowUp, Difficulty } from "./types";
+export type { Question, QuestionMeta, QuestionSource, TocItem, FollowUp, Difficulty, QaItem, QuestionKind } from "./types";
 export { DIFFICULTY_LABEL } from "./types";
+
+export function isPackCategory(categoryId: string): boolean {
+  return categoryId === "bigtech";
+}
 
 /** 当前使用的数据源；二期切换到数据库时只需替换这里 */
 export const questions: QuestionRepository = new MarkdownRepository();

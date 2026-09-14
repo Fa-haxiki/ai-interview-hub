@@ -256,13 +256,14 @@
 
 .prose :where(pre):not(:where([class~="not-prose"] *)) {
   margin: 1.25em 0;
-  padding: 1em 1.1em;
+  padding: 1.15em 1.35em;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  font-size: 0.85em;
-  line-height: 1.7;
+  font-size: 0.875em;
+  line-height: 1.75;
+  tab-size: 2;
   background: var(--shiki-light-bg, var(--muted));
 }
 
@@ -273,6 +274,7 @@
 .prose :where(pre code) {
   display: block;
   min-width: max-content;
+  font-variant-ligatures: none;
 }
 
 /* Shiki 双主题：亮色用 --shiki-light，暗色用 --shiki-dark */

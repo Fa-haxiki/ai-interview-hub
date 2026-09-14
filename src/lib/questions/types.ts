@@ -2,6 +2,13 @@ import type { CategoryId } from "@content/taxonomy";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
+export type QuestionKind = "article" | "qa-pack";
+
+export interface QaItem {
+  question: string;
+  answerHtml: string;
+}
+
 export type SourceLang = "zh" | "en";
 
 export interface QuestionSource {
@@ -45,6 +52,10 @@ export interface QuestionMeta {
   summary: string;
   /** 站内路径，如 /ai/rag/what-is-rag/ */
   url: string;
+  kind: QuestionKind;
+  /** qa-pack 内的题目数；普通题为 1 */
+  qaCount: number;
+  notes?: string;
 }
 
 /** 详情页使用的完整题目 */
@@ -55,6 +66,7 @@ export interface Question extends QuestionMeta {
   plainText: string;
   readingMinutes: number;
   followUps: FollowUp[];
+  qaItems: QaItem[];
 }
 
 export const DIFFICULTY_LABEL: Record<Difficulty, string> = {

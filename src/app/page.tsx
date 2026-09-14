@@ -9,6 +9,7 @@ import {
   getCategoriesWithCounts,
   getRecentQuestions,
   getTopicName,
+  isPackCategory,
 } from "@/lib/questions";
 import { siteConfig } from "@/lib/site";
 
@@ -17,12 +18,17 @@ export default async function HomePage() {
     getCategoriesWithCounts(),
     getRecentQuestions(6),
   ]);
-  const total = categories.reduce((sum, c) => sum + c.count, 0);
-  const topicCount = categories.reduce(
-    (sum, c) => sum + c.topics.filter((t) => t.count > 0).length,
-    0,
-  );
+  const questionTotal = categories
+    .filter((c) => !isPackCategory(c.id))
+    .reduce((sum, c) => sum + c.count, 0);
+  const packTotal = categories
+    .filter((c) => isPackCategory(c.id))
+    .reduce((sum, c) => sum + c.count, 0);
+  const topicCount = categories
+    .filter((c) => !isPackCategory(c.id))
+    .reduce((sum, c) => sum + c.topics.filter((t) => t.count > 0).length, 0);
   const featured = categories
+    .filter((c) => !isPackCategory(c.id))
     .flatMap((c) => c.topics)
     .sort((a, b) => b.count - a.count)[0];
 
@@ -50,7 +56,8 @@ export default async function HomePage() {
           </Button>
         </div>
         <p className="mt-6 text-sm text-muted-foreground">
-          共 {total} 道题 · {topicCount} 个主题
+          共 {questionTotal} 道题
+          {packTotal > 0 ? ` · ${packTotal} 份面经` : ""} · {topicCount} 个主题
           {recent[0] && ` · 最近更新 ${recent[0].updatedAt}`}
         </p>
         <ContinueReading />

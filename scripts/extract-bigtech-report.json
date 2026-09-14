@@ -1,0 +1,598 @@
+[
+  {
+    "file": "【精】2024字节前端面试题（45题）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 45,
+    "slug": "2024字节前端面试题"
+  },
+  {
+    "file": "【精】京东前端二面面经.pdf",
+    "status": "ok",
+    "reason": "目录 30 题，对齐 19 题，其余原文无对应解答",
+    "count": 19,
+    "slug": "京东前端二面面经"
+  },
+  {
+    "file": "【前端面经】2023面试复盘之快手.pdf",
+    "status": "ok",
+    "reason": "目录 23 题，对齐 9 题，其余原文无对应解答",
+    "count": 9,
+    "slug": "前端面经-2023面试复盘之快手"
+  },
+  {
+    "file": "【前端面经】美图Meitu.pdf",
+    "status": "ok",
+    "reason": "目录 31 题，对齐 17 题，其余原文无对应解答",
+    "count": 17,
+    "slug": "前端面经-美图Meitu"
+  },
+  {
+    "file": "2026阿里高级前端面经.pdf",
+    "status": "ok",
+    "reason": "目录 29 题，对齐 26 题，其余原文无对应解答",
+    "count": 26,
+    "slug": "2026阿里高级前端面经"
+  },
+  {
+    "file": "2026阿里妈妈高级前端工程师-AI产品方向.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026阿里妈妈高级前端工程师-AI产品方向"
+  },
+  {
+    "file": "2026阿里前端开发-AI平台.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026阿里前端开发-AI平台"
+  },
+  {
+    "file": "2026阿里云高级前端开发（AI经验）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026阿里云高级前端开发"
+  },
+  {
+    "file": "2026阿里云前端技术专家-AI领域.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026阿里云前端技术专家-AI领域"
+  },
+  {
+    "file": "2026得物AI应用开发.pdf",
+    "status": "ok",
+    "reason": "目录 28 题，对齐 27 题，其余原文无对应解答",
+    "count": 27,
+    "slug": "2026得物AI应用开发"
+  },
+  {
+    "file": "2026电信前端AI工程师面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026电信前端AI工程师面试"
+  },
+  {
+    "file": "2026钉钉AI 前端研发工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026钉钉AI-前端研发工程师"
+  },
+  {
+    "file": "2026度小满前端开发-金融 AI .pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 27,
+    "slug": "2026度小满前端开发-金融-AI"
+  },
+  {
+    "file": "2026高德 Al agent 前端开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026高德-Al-agent-前端开发"
+  },
+  {
+    "file": "2026高德AI Agent前端开发工程.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 18,
+    "slug": "2026高德AI-Agent前端开发工程"
+  },
+  {
+    "file": "2026高顿AI全栈开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 18,
+    "slug": "2026高顿AI全栈开发"
+  },
+  {
+    "file": "2026海外岗前端AI架构师面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026海外岗前端AI架构师面试"
+  },
+  {
+    "file": "2026京东前端开发 - AI coding.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026京东前端开发-AI-coding"
+  },
+  {
+    "file": "2026京东前端面试-大模型方向.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 30,
+    "slug": "2026京东前端面试-大模型方向"
+  },
+  {
+    "file": "2026京东前端面试-AI Coding方向.pdf",
+    "status": "ok",
+    "reason": "目录 36 题，对齐 17 题，其余原文无对应解答",
+    "count": 17,
+    "slug": "2026京东前端面试-AI-Coding方向"
+  },
+  {
+    "file": "2026京东AI 前端开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026京东AI-前端开发"
+  },
+  {
+    "file": "2026京东AI工具前端开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026京东AI工具前端开发"
+  },
+  {
+    "file": "2026快手前端研发工程师面试（agent方向）.pdf",
+    "status": "ok",
+    "reason": "目录 26 题，对齐 22 题，其余原文无对应解答",
+    "count": 22,
+    "slug": "2026快手前端研发工程师面试"
+  },
+  {
+    "file": "2026快手前端AI面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 22,
+    "slug": "2026快手前端AI面试"
+  },
+  {
+    "file": "2026蚂蚁AI_前端开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 21,
+    "slug": "2026蚂蚁AI-前端开发"
+  },
+  {
+    "file": "2026美团前端架构师面试-数据权限方向.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 31,
+    "slug": "2026美团前端架构师面试-数据权限方向"
+  },
+  {
+    "file": "2026美团前端开发工程师（AI Coding 方向）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026美团前端开发工程师"
+  },
+  {
+    "file": "2026美团前端全栈开发.pdf",
+    "status": "ok",
+    "reason": "目录 28 题，对齐 27 题，其余原文无对应解答",
+    "count": 27,
+    "slug": "2026美团前端全栈开发"
+  },
+  {
+    "file": "2026明略科技前端开发-Al agent.pdf",
+    "status": "ok",
+    "reason": "目录 19 题，对齐 18 题，其余原文无对应解答",
+    "count": 18,
+    "slug": "2026明略科技前端开发-Al-agent"
+  },
+  {
+    "file": "2026拼多多前端面经.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 28,
+    "slug": "2026拼多多前端面经"
+  },
+  {
+    "file": "2026千问AI视频前端研发2026.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 30,
+    "slug": "2026千问AI视频前端研发2026"
+  },
+  {
+    "file": "2026三个逗号AI全栈开发工程师面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 17,
+    "slug": "2026三个逗号AI全栈开发工程师面试"
+  },
+  {
+    "file": "2026商汤科技AI 云平台前端开发工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 18,
+    "slug": "2026商汤科技AI-云平台前端开发工程师"
+  },
+  {
+    "file": "2026深度求索web前端高级工程师-AIGC.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026深度求索web前端高级工程师-AIGC"
+  },
+  {
+    "file": "2026搜狐AI 前端开发-智能媒体.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026搜狐AI-前端开发-智能媒体"
+  },
+  {
+    "file": "2026淘宝前端开发_AI全栈开发.pdf",
+    "status": "ok",
+    "reason": "目录 25 题，对齐 23 题，其余原文无对应解答",
+    "count": 23,
+    "slug": "2026淘宝前端开发-AI全栈开发"
+  },
+  {
+    "file": "2026淘宝直播 Al agent前端开发工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026淘宝直播-Al-agent前端开发工程师"
+  },
+  {
+    "file": "2026腾讯混元AIGC前端架构师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026腾讯混元AIGC前端架构师"
+  },
+  {
+    "file": "2026腾讯文档 前端开发2026.pdf",
+    "status": "ok",
+    "reason": "目录 28 题，对齐 26 题，其余原文无对应解答",
+    "count": 26,
+    "slug": "2026腾讯文档-前端开发2026"
+  },
+  {
+    "file": "2026腾讯音乐 前端开发（AI产品）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026腾讯音乐-前端开发"
+  },
+  {
+    "file": "2026网易AI前端工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 21,
+    "slug": "2026网易AI前端工程师"
+  },
+  {
+    "file": "2026微派前端_全栈开发.pdf",
+    "status": "ok",
+    "reason": "目录 28 题，对齐 27 题，其余原文无对应解答",
+    "count": 27,
+    "slug": "2026微派前端-全栈开发"
+  },
+  {
+    "file": "2026微信读书前端面试-agent方向.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 21,
+    "slug": "2026微信读书前端面试-agent方向"
+  },
+  {
+    "file": "2026小红书前端技术专家-社区工程.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 23,
+    "slug": "2026小红书前端技术专家-社区工程"
+  },
+  {
+    "file": "2026小红书前端开发-点点（AI产品）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026小红书前端开发-点点"
+  },
+  {
+    "file": "2026小红书前端开发-AI创新应用.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 28,
+    "slug": "2026小红书前端开发-AI创新应用"
+  },
+  {
+    "file": "2026小红书AI前端面试.pdf",
+    "status": "ok",
+    "reason": "目录 26 题，对齐 19 题，其余原文无对应解答",
+    "count": 19,
+    "slug": "2026小红书AI前端面试"
+  },
+  {
+    "file": "2026已发交个朋友全栈AI工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026已发交个朋友全栈AI工程师"
+  },
+  {
+    "file": "2026有赞AI全栈工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 30,
+    "slug": "2026有赞AI全栈工程师"
+  },
+  {
+    "file": "2026云从科技大前端工程师（AI交互方向）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026云从科技大前端工程师"
+  },
+  {
+    "file": "2026转转科技前端面试.pdf",
+    "status": "ok",
+    "reason": "目录 28 题，对齐 25 题，其余原文无对应解答",
+    "count": 25,
+    "slug": "2026转转科技前端面试"
+  },
+  {
+    "file": "2026字节前端开发-AI搜索.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 18,
+    "slug": "2026字节前端开发-AI搜索"
+  },
+  {
+    "file": "2026字节前端AI开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026字节前端AI开发"
+  },
+  {
+    "file": "2026字节前端AI面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026字节前端AI面试"
+  },
+  {
+    "file": "2026字节AI全栈开发-侧重前端.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 17,
+    "slug": "2026字节AI全栈开发-侧重前端"
+  },
+  {
+    "file": "2026MiNiMax前端AI开发.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 20,
+    "slug": "2026MiNiMax前端AI开发"
+  },
+  {
+    "file": "2026Newsbreak AI全栈工程师.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 19,
+    "slug": "2026Newsbreak-AI全栈工程师"
+  },
+  {
+    "file": "2年经验社招微信5面面经.pdf",
+    "status": "ok",
+    "reason": "目录 20 题，对齐 8 题，其余原文无对应解答",
+    "count": 8,
+    "slug": "2年经验社招微信5面面经"
+  },
+  {
+    "file": "360 AI前端-PPT编辑器开发.pdf",
+    "status": "ok",
+    "reason": "目录 26 题，对齐 25 题，其余原文无对应解答",
+    "count": 25,
+    "slug": "360-AI前端-PPT编辑器开发"
+  },
+  {
+    "file": "360前端面试.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 10,
+    "slug": "360前端面试"
+  },
+  {
+    "file": "阿里前端一面+二面+hr面.pdf",
+    "status": "skip",
+    "reason": "目录切分不可靠（129 条），整份不收录",
+    "count": 0
+  },
+  {
+    "file": "百度贴吧 前端研发工程师面经.pdf",
+    "status": "ok",
+    "reason": "目录 52 题，对齐 47 题，其余原文无对应解答",
+    "count": 47,
+    "slug": "百度贴吧-前端研发工程师面经"
+  },
+  {
+    "file": "大厂面试真题（题目）.pdf",
+    "status": "skip",
+    "reason": "目录切分不可靠（103 条），整份不收录",
+    "count": 0
+  },
+  {
+    "file": "得物前端面经.pdf",
+    "status": "ok",
+    "reason": "目录 16 题，对齐 13 题，其余原文无对应解答",
+    "count": 13,
+    "slug": "得物前端面经"
+  },
+  {
+    "file": "滴滴前端面试真题.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 5 题）",
+    "count": 0
+  },
+  {
+    "file": "钉钉高级前端工程师 · 面试全流程.pdf",
+    "status": "ok",
+    "reason": "目录 30 题，对齐 21 题，其余原文无对应解答",
+    "count": 21,
+    "slug": "钉钉高级前端工程师-面试全流程"
+  },
+  {
+    "file": "飞书面试一面+二面.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 11 题）",
+    "count": 0
+  },
+  {
+    "file": "高级前端大厂面试题（15题）.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 15 题）",
+    "count": 0
+  },
+  {
+    "file": "海康威视前端面试题.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 8 题）",
+    "count": 0
+  },
+  {
+    "file": "好未来 “资深高级前端研发工程师” 面经.pdf",
+    "status": "ok",
+    "reason": "目录 32 题，对齐 22 题，其余原文无对应解答",
+    "count": 22,
+    "slug": "好未来-资深高级前端研发工程师-面经"
+  },
+  {
+    "file": "京东零售前端开发工程师1-3面.pdf",
+    "status": "ok",
+    "reason": "目录 46 题，对齐 19 题，其余原文无对应解答",
+    "count": 19,
+    "slug": "京东零售前端开发工程师1-3面"
+  },
+  {
+    "file": "蚂蚁前端面试.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 14 题）",
+    "count": 0
+  },
+  {
+    "file": "美团高级前端1-3面+HR面.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 24 题）",
+    "count": 0
+  },
+  {
+    "file": "美团前端面经.pdf",
+    "status": "ok",
+    "reason": "目录 21 题，对齐 15 题，其余原文无对应解答",
+    "count": 15,
+    "slug": "美团前端面经"
+  },
+  {
+    "file": "美团前端一面.pdf",
+    "status": "ok",
+    "reason": "目录 15 题，对齐 8 题，其余原文无对应解答",
+    "count": 8,
+    "slug": "美团前端一面"
+  },
+  {
+    "file": "去哪儿网高级前端工程师 1-3面.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 21,
+    "slug": "去哪儿网高级前端工程师-1-3面"
+  },
+  {
+    "file": "深信服，前端工程师岗，一面面经（40分钟）.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 8,
+    "slug": "深信服-前端工程师岗-一面面经"
+  },
+  {
+    "file": "腾讯某部门前端开发面试真题.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 18 题）",
+    "count": 0
+  },
+  {
+    "file": "腾讯前端面试.pdf",
+    "status": "ok",
+    "reason": "目录 27 题，对齐 5 题，其余原文无对应解答",
+    "count": 5,
+    "slug": "腾讯前端面试"
+  },
+  {
+    "file": "腾讯校招前端三面.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 15 题）",
+    "count": 0
+  },
+  {
+    "file": "小红书前端面经.pdf",
+    "status": "ok",
+    "reason": "目录 21 题，对齐 18 题，其余原文无对应解答",
+    "count": 18,
+    "slug": "小红书前端面经"
+  },
+  {
+    "file": "携程前端面试.pdf",
+    "status": "ok",
+    "reason": "目录 17 题，对齐 14 题，其余原文无对应解答",
+    "count": 14,
+    "slug": "携程前端面试"
+  },
+  {
+    "file": "转转集团 前端开发1-3面.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 30,
+    "slug": "转转集团-前端开发1-3面"
+  },
+  {
+    "file": "字节前端面试.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 9 题）",
+    "count": 0
+  },
+  {
+    "file": "字节前端面试真题.pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 5 题）",
+    "count": 0
+  },
+  {
+    "file": "字节跳动与阿里前端面经.pdf",
+    "status": "ok",
+    "reason": "",
+    "count": 31,
+    "slug": "字节跳动与阿里前端面经"
+  },
+  {
+    "file": "作业帮前端一面+二面)(vue2+vue3).pdf",
+    "status": "skip",
+    "reason": "题干对不上原文或缺少参考答案（识别 16 题）",
+    "count": 0
+  }
+]

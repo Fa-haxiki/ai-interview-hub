@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { PackDocumentList } from "@/components/pack-document-list";
 import { QuestionList } from "@/components/question-list";
 import { SectionChips } from "@/components/section-chips";
 import { SiteBreadcrumb } from "@/components/site-breadcrumb";
 import { TopicSidebar } from "@/components/topic-sidebar";
-import { getCategoryWithCounts, getTopicSections } from "@/lib/questions";
+import {
+  getCategoryWithCounts,
+  getTopicSections,
+  isPackCategory,
+  questions,
+} from "@/lib/questions";
 import { taxonomy } from "@content/taxonomy";
 
 export const dynamicParams = false;
@@ -34,6 +40,30 @@ export default async function TopicPage({ params }: PageProps<"/[category]/[topi
   if (!data || !topicDef) notFound();
 
   const sections = await getTopicSections(category, topic);
+
+  if (isPackCategory(category)) {
+    const documents = (await questions.listAll()).filter(
+      (q) => q.category === category && q.topic === topic,
+    );
+    const qaTotal = documents.reduce((sum, q) => sum + q.qaCount, 0);
+    return (
+      <div className="mx-auto max-w-6xl px-4 py-6 md:py-10">
+        <SiteBreadcrumb items={[{ label: data.name, href: data.url }, { label: topicDef.name }]} />
+        <header className="mt-4">
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{data.name}</h1>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {data.description}
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {documents.length > 0
+              ? `共 ${documents.length} 份面经 · ${qaTotal} 题`
+              : ""}
+          </p>
+        </header>
+        <PackDocumentList documents={documents} />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 md:grid md:grid-cols-[13.5rem_minmax(0,1fr)] md:gap-10 md:py-10">

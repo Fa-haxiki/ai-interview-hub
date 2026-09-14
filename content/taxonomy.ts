@@ -4,7 +4,7 @@
  * frontmatter 中的 category / topic / section 必须能在这里找到，否则构建失败。
  */
 
-export type CategoryId = "frontend" | "backend" | "ai";
+export type CategoryId = "frontend" | "backend" | "ai" | "bigtech";
 
 export interface TopicDef {
   /** URL 与目录名 */
@@ -185,6 +185,19 @@ export const taxonomy: CategoryDef[] = [
         name: "分布式与系统设计",
         description: "一致性、高可用、限流降级与架构设计题。",
         sections: ["一致性与协调", "高可用", "系统设计"],
+      },
+    ],
+  },
+  {
+    id: "bigtech",
+    name: "大厂面试题",
+    description: "按文档标题收录的大厂面经，一份文档一页，点击题目展开参考答案。",
+    topics: [
+      {
+        id: "packs",
+        name: "面经",
+        description: "内部主题，分类页按文档标题平铺，不单独展示。",
+        sections: ["2026", "2025", "2024", "其他"],
       },
     ],
   },

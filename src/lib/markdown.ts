@@ -12,7 +12,8 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
-import type { FollowUp, TocItem } from "@/lib/questions/types";
+import { remarkFormatCode } from "@/lib/format-code";
+import type { FollowUp, QaItem, TocItem } from "@/lib/questions/types";
 
 export interface RenderedMarkdown {
   html: string;
@@ -41,6 +42,7 @@ function rehypeWrapTables() {
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
+  .use(remarkFormatCode)
   .use(remarkRehype)
   .use(rehypeSlug)
   .use(rehypeAutolinkHeadings, {
@@ -135,4 +137,31 @@ export async function renderMarkdown(markdown: string): Promise<RenderedMarkdown
 /** 按中文阅读速度估算（约 400 字/分钟） */
 export function estimateReadingMinutes(plainText: string): number {
   return Math.max(1, Math.round(plainText.length / 400));
+}
+
+/** 把 qa-pack 正文按三级标题切成问答对，标题是问题，其后内容是参考答案。 */
+export async function parseQaPack(markdown: string): Promise<QaItem[]> {
+  const tree = processor.parse(markdown) as MdastRoot;
+  const items: { question: string; nodes: MdastRoot["children"] }[] = [];
+  let current: { question: string; nodes: MdastRoot["children"] } | null = null;
+
+  for (const node of tree.children) {
+    if (node.type === "heading" && node.depth === 3) {
+      const question = mdastToString(node).replace(/\s+/g, " ").trim();
+      if (!question) continue;
+      current = { question, nodes: [] };
+      items.push(current);
+      continue;
+    }
+    if (current) current.nodes.push(node);
+  }
+
+  const qaItems: QaItem[] = [];
+  for (const item of items) {
+    const answerTree: MdastRoot = { type: "root", children: item.nodes };
+    const hast = await processor.run(answerTree);
+    const answerHtml = String(processor.stringify(hast as HastRoot)).trim();
+    qaItems.push({ question: item.question, answerHtml });
+  }
+  return qaItems;
 }

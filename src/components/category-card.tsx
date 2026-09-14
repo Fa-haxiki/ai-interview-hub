@@ -2,10 +2,12 @@ import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 import type { CategoryWithCount } from "@/lib/questions";
+import { isPackCategory } from "@/lib/questions";
 import { cn } from "@/lib/utils";
 
 export function CategoryCard({ category }: { category: CategoryWithCount }) {
   const ready = category.count > 0;
+  const pack = isPackCategory(category.id);
 
   return (
     <Link
@@ -27,22 +29,26 @@ export function CategoryCard({ category }: { category: CategoryWithCount }) {
             ready ? "text-foreground" : "text-muted-foreground",
           )}
         >
-          {ready ? `${category.count} 题` : "筹备中"}
+          {ready ? (pack ? `${category.count} 份面经` : `${category.count} 题`) : "筹备中"}
         </span>
       </div>
 
-      <ul className="mt-4 flex flex-col gap-1.5 text-sm">
-        {category.topics.slice(0, 4).map((topic) => (
-          <li key={topic.id} className="flex items-center justify-between gap-3">
-            <span className={topic.count > 0 ? "text-foreground/90" : "text-muted-foreground"}>
-              {topic.name}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {topic.count > 0 ? topic.count : "—"}
-            </span>
-          </li>
-        ))}
-      </ul>
+      {pack ? (
+        <p className="mt-4 text-sm text-muted-foreground">按文档标题浏览，点击题目展开参考答案。</p>
+      ) : (
+        <ul className="mt-4 flex flex-col gap-1.5 text-sm">
+          {category.topics.slice(0, 4).map((topic) => (
+            <li key={topic.id} className="flex items-center justify-between gap-3">
+              <span className={topic.count > 0 ? "text-foreground/90" : "text-muted-foreground"}>
+                {topic.name}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {topic.count > 0 ? topic.count : "—"}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand">
         进入分类

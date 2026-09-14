@@ -5,7 +5,7 @@ import matter from "gray-matter";
 import { z } from "zod";
 
 import { categoryIds, getCategoryDef, getTopicDef, taxonomy } from "@content/taxonomy";
-import { estimateReadingMinutes, renderMarkdown } from "@/lib/markdown";
+import { estimateReadingMinutes, parseQaPack, renderMarkdown } from "@/lib/markdown";
 
 import type { QuestionRepository } from "./repository";
 import type { Question, QuestionMeta } from "./types";
@@ -36,6 +36,8 @@ const frontmatterSchema = z.object({
   createdAt: dateField,
   updatedAt: dateField.optional(),
   order: z.number().int().default(999),
+  kind: z.enum(["article", "qa-pack"]).default("article"),
+  notes: z.string().optional(),
 });
 
 type Frontmatter = z.infer<typeof frontmatterSchema>;
@@ -80,6 +82,10 @@ async function readQuestionFile(filePath: string): Promise<Question> {
   }
 
   const rendered = await renderMarkdown(content);
+  const qaItems = fm.kind === "qa-pack" ? await parseQaPack(content) : [];
+  if (fm.kind === "qa-pack" && qaItems.length === 0) {
+    throw new Error(`题目 ${rel} 标记为 qa-pack，但正文里没有三级标题问题`);
+  }
 
   return {
     slug,
@@ -93,13 +99,27 @@ async function readQuestionFile(filePath: string): Promise<Question> {
     createdAt: fm.createdAt,
     updatedAt: fm.updatedAt ?? fm.createdAt,
     order: fm.order,
-    summary: rendered.summary,
+    kind: fm.kind,
+    qaCount: fm.kind === "qa-pack" ? qaItems.length : 1,
+    notes: fm.notes,
+    summary:
+      fm.kind === "qa-pack"
+        ? `共 ${qaItems.length} 题`
+        : rendered.summary,
     url: questionUrl(fm.category, fm.topic, slug),
     html: rendered.html,
-    toc: rendered.toc,
+    toc:
+      fm.kind === "qa-pack"
+        ? qaItems.map((item, index) => ({
+            id: `q-${index + 1}`,
+            text: item.question,
+            depth: 3 as const,
+          }))
+        : rendered.toc,
     plainText: rendered.plainText,
     readingMinutes: estimateReadingMinutes(rendered.plainText),
     followUps: rendered.followUps,
+    qaItems,
   };
 }
 
@@ -163,6 +183,9 @@ function toMeta(q: Question): QuestionMeta {
     createdAt: q.createdAt,
     updatedAt: q.updatedAt,
     order: q.order,
+    kind: q.kind,
+    qaCount: q.qaCount,
+    notes: q.notes,
     summary: q.summary,
   };
 }
@@ -200,8 +223,19 @@ export class MarkdownRepository implements QuestionRepository {
 
   async get(category: string, topic: string, slug: string): Promise<Question | null> {
     const all = await this.load();
+    let decoded = slug;
+    try {
+      decoded = decodeURIComponent(slug);
+    } catch {
+      decoded = slug;
+    }
     return (
-      all.find((q) => q.category === category && q.topic === topic && q.slug === slug) ?? null
+      all.find(
+        (q) =>
+          q.category === category &&
+          q.topic === topic &&
+          (q.slug === slug || q.slug === decoded),
+      ) ?? null
     );
   }
 }
